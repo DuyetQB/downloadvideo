@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download video by pass URL</title>
+    <meta name="description" content="This website help you download Youtube video" />
+    <meta name="author" content="Dinh Si Duyet" />
+    <meta property="og:image"
+        content="https://cdn.dribbble.com/users/393931/screenshots/16280170/media/2f868e42ceb263a8e2488db8d7e1289b.png" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .wrapper {
+            background: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            overflow-x: hidden;
+            flex-direction: column;
+            flex: 1;
+            position: relative;
+        }
+
+        .search {
+            display: flex;
+
+        }
+
+        #inputValue {
+            padding: 20px;
+            border-radius: 4px;
+            outline: none;
+            border: none;
+            width: 400px;
+        }
+
+        #btn {
+            padding: 20px 20px;
+            margin-left: 30px;
+            border-radius: 4px;
+            color: white;
+            background-color: orangered;
+            outline: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .wrap-notification {
+            position: absolute;
+            top: -100px;
+            background: white;
+            padding: 10px;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+
+        .wrap-notification::before {
+            background: rgb(10, 212, 3);
+            width: 4px;
+            height: 80%;
+            position: absolute;
+            left: 2px;
+            content: "";
+            transform: translateY(-23%);
+
+        }
+
+        .animation {
+            animation: toDown 0.6s ease-in-out forwards;
+        }
+
+        @keyframes toDown {
+            0% {
+                top: 0px;
+            }
+
+            100% {
+                top: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div class="search">
+            <input type="text" placeholder="pass your video url to download " id="inputValue">
+            <button id="btn">download</button>
+        </div>
+        <div class="wrap-notification">
+            <span>Đang tải xuống video </span>
+        </div>
+
+    </div>
+    <script>
+
+        let api = "https://downloadvideo.vercel.app";
+
+        let InputValue = document.querySelector("#inputValue");
+        let Btn = document.querySelector("#btn");
+        let Notification = document.querySelector(".wrap-notification");
+
+
+        Btn.addEventListener("click", function () {
+            Notification.classList.add("animation");
+            if (!InputValue.value) {
+                alert("Enter YouTube URL");
+                Notification.classList.remove("animation");
+            }
+            else {
+
+                downloadMp4(InputValue.value);
+            }
+        });
+
+        async function downloadMp4(query) {
+
+            const res = await fetch(`${api}/download?url=${query}`);
+            console.log('fetch', res);
+            if (res.status == 200) {
+
+                var a = document.createElement("a");
+                a.href = `${api}/download?url=${query}`;
+                a.setAttribute("download", "");
+                a.click();
+                Notification.classList.remove("animation");
+
+            } else if (res.status == 400) {
+                alert("Invalid url");
+
+            }
+        }
+
+    </script>
+</body>
+
+</html>
