@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const PORT = 4000 || process.env.PORT;
+const PORT = process.env.PORT || 4000;
 const cors = require("cors");
 const logger = require("morgan");
 const Router = require("./Route/index.js");
@@ -9,7 +9,7 @@ const ytdl = require("ytdl-core");
 app.use(cors());
 
 var corsOptions = {
-  origin: "https://downloadvideo.vercel.app",
+  origin: "https://downloadvideo.vercel.app/",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 //middleware
