@@ -6,12 +6,12 @@ const logger = require("morgan");
 const Router = require("./Route/index.js");
 const ytdl = require("ytdl-core");
 
-app.use(cors());
-
 var corsOptions = {
   origin: "https://downloadvideo.vercel.app",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
+
+app.use(cors(corsOptions));
 //middleware
 app.use(logger("dev"));
 
