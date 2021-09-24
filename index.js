@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
-app.get("/download", cors(corsOptions), Router);
+app.use("/download", cors(corsOptions), Router);
 
 // 404
 

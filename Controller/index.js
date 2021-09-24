@@ -2,7 +2,7 @@ const ytdl = require("ytdl-core");
 
 const download = async (req, res, next) => {
   var url = req.query.url;
-  console.log("url", url);
+
   if (!ytdl.validateURL(url)) {
     return res.sendStatus(400);
   } else {
