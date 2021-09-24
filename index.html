@@ -131,7 +131,7 @@
         async function downloadMp4(query) {
 
             const res = await fetch(`${api}/download?url=${query}`);
-            console.log('fetch', res);
+
             if (res.status == 200) {
 
                 var a = document.createElement("a");
