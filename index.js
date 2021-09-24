@@ -9,7 +9,7 @@ const ytdl = require("ytdl-core");
 app.use(cors());
 
 var corsOptions = {
-  origin: PORT,
+  origin: process.env.PORT,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 //middleware
@@ -43,7 +43,7 @@ app.get("/download", cors(corsOptions), async (req, res, next) => {
     );
 
     res.header("Content-Disposition", `attachment; filename="${title}.mp4"`);
-    header("Access-Control-Allow-Origin: *");
+
     ytdl(url, {
       format: "mp4",
     }).pipe(res);
