@@ -11,7 +11,7 @@ var corsOptions = {
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 //middleware
 app.use(logger("dev"));
 
@@ -21,33 +21,33 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
-app.get("/download", cors(corsOptions), (req, res) => {
+app.get("/download", cors(corsOptions), async (req, res) => {
   try {
     var url = req.query.url;
 
     if (!ytdl.validateURL(url)) {
       return res.sendStatus(400);
-    } else {
-      const title = "video";
-
-      await ytdl.getBasicInfo(
-        url,
-        {
-          format: "mp4",
-        },
-        (err, info) => {
-          title = info.player_response.videoDetails.title.replace(
-            /[^\x00-\x7F]/g,
-            ""
-          );
-        }
-      );
-
-      res.header("Content-Disposition", `attachment; filename="${title}.mp4"`);
-      ytdl(url, {
-        format: "mp4",
-      }).pipe(res);
     }
+    const title = "video";
+
+    await ytdl.getBasicInfo(
+      url,
+      {
+        format: "mp4",
+      },
+      (err, info) => {
+        title = info.player_response.videoDetails.title.replace(
+          /[^\x00-\x7F]/g,
+          ""
+        );
+      }
+    );
+
+    res.header("Content-Disposition", `attachment; filename="${title}.mp4"`);
+
+    return ytdl(url, {
+      format: "mp4",
+    }).pipe(res);
   } catch (error) {
     console.log(error);
   }
