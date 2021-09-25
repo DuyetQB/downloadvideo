@@ -54,6 +54,11 @@ const download = async (req, res) => {
     console.log(error);
   }
 };
+const get = (req, res) => {
+  const url = req.query.url;
+  return res.status(200).json({ url });
+};
 module.exports = {
   download,
+  get,
 };
