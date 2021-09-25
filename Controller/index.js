@@ -24,7 +24,8 @@ const download = async (req, res) => {
   // const VIDEO_URL = req.query.url;
   // downloadFile(VIDEO_URL, "download");
   try {
-    var url = req.query.url;
+    const url = req.query.url;
+    console.log("url,", url);
 
     if (!ytdl.validateURL(url)) {
       return res.sendStatus(400);

@@ -7,7 +7,7 @@ const Router = require("./Route/index.js");
 const ytdl = require("ytdl-core");
 
 var corsOptions = {
-  origin: "https://downloadvideo.vercel.app",
+  origin: PORT,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 // cors(corsOptions),
@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static("public"));
 
-app.get("/", cors(corsOptions), (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 app.use("/download", cors(corsOptions), Router);
