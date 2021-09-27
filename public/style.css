@@ -17,7 +17,7 @@ body {
     margin: 0px auto;
 }
 .wrapper {
-    background: #ccc;
+    background: #ecebeb;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -85,4 +85,19 @@ background: orangered;
 color:white;
 margin-top: 20px;
 margin-left: 30px;
+}
+
+@media screen and (max-width: 600px) {
+    #inputValue{
+        width:225px;
+    }
+    #btn{
+        margin-left:20px;
+    }
+    .wrap-infor{
+        flex-direction: column;
+    }
+    .wrap-infor .infor-contents .title {
+        width:30%;
+    }
 }

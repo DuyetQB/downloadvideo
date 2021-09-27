@@ -3,7 +3,6 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 const cors = require("cors");
 const logger = require("morgan");
-const Router = require("./Route/index.js");
 const ytdl = require("ytdl-core");
 
 // var corsOptions = {
@@ -63,21 +62,6 @@ app.use("/download", async (req, res) => {
     console.log(error);
   }
 });
-
-// 404
-
-// app.use(function (req, res, next) {
-//   const err = new Error("not found");
-//   err.status = 404;
-//   next(err);
-// });
-
-// erorr handle function
-// app.use((err, req, res, next) => {
-//   const error = app.get("env") === "development" ? err : {};
-//   const status = err.status || 500;
-//   return res.status(status).json({ error });
-// });
 
 app.listen(PORT, () => {
   console.log(`the server is listening on port ${PORT}`);
