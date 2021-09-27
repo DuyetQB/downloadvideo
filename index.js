@@ -21,9 +21,47 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "public/index.html");
 });
-app.use("/download", cors(corsOptions), Router);
+
+app.get("/getInfor", async (req, res) => {
+  const url = req.query.url;
+  const infor = await ytdl.getInfo(url);
+
+  res.status(200).json(infor);
+});
+app.use("/download", async (req, res) => {
+  try {
+    const url = req.query.url;
+
+    if (!ytdl.validateURL(url)) {
+      return res.sendStatus(400);
+    } else {
+      const title = "video";
+
+      await ytdl.getInfo(
+        url,
+        {
+          format: "mp4",
+        },
+        (err, info) => {
+          console.log("infor", info.player_response.videoDetails);
+          title = info.player_response.videoDetails.title.replace(
+            /[^\x00-\x7F]/g,
+            ""
+          );
+        }
+      );
+
+      res.header("Content-Disposition", `attachment; filename="${title}.mp4"`);
+      ytdl(url, {
+        format: "mp4",
+      }).pipe(res);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 // 404
 

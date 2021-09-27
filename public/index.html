@@ -10,89 +10,11 @@
     <meta name="author" content="Dinh Si Duyet" />
     <meta property="og:image"
         content="https://cdn.dribbble.com/users/393931/screenshots/16280170/media/2f868e42ceb263a8e2488db8d7e1289b.png" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
 
-        }
-
-        body {
-            overflow: hidden;
-        }
-
-        .wrapper {
-            background: #ccc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            width: 100vw;
-            overflow-x: hidden;
-            flex-direction: column;
-            flex: 1;
-            position: relative;
-        }
-
-        .search {
-            display: flex;
-
-        }
-
-        #inputValue {
-            padding: 20px;
-            border-radius: 4px;
-            outline: none;
-            border: none;
-            width: 400px;
-        }
-
-        #btn {
-            padding: 20px 20px;
-            margin-left: 30px;
-            border-radius: 4px;
-            color: white;
-            background-color: orangered;
-            outline: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        .wrap-notification {
-            position: absolute;
-            top: -100px;
-            background: white;
-            padding: 10px;
-            font-size: 12px;
-            border-radius: 4px;
-        }
-
-        .wrap-notification::before {
-            background: rgb(10, 212, 3);
-            width: 4px;
-            height: 80%;
-            position: absolute;
-            left: 2px;
-            content: "";
-            transform: translateY(-23%);
-
-        }
-
-        .animation {
-            animation: toDown 0.6s ease-in-out forwards;
-        }
-
-        @keyframes toDown {
-            0% {
-                top: 0px;
-            }
-
-            100% {
-                top: 30px;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -102,8 +24,18 @@
             <input type="text" placeholder="pass your video url to download " id="inputValue">
             <button id="btn">download</button>
         </div>
-        <div class="wrap-notification">
-            <span>Đang tải xuống video </span>
+        <div class="container">
+            <div class="wrap-infor">
+                <div class="infor-img"></div>
+
+                <div class="infor-contents">
+
+                    <h2 class="title"></h2>
+                </div>
+            </div>
+
+
+
         </div>
 
     </div>
@@ -111,40 +43,78 @@
 
         let api = "https://downloadvideo.vercel.app"
 
+        let $ = document.querySelector.bind(document);
+        let $$ = document.querySelectorAll.bind(document);
+
         let InputValue = document.querySelector("#inputValue");
         let Btn = document.querySelector("#btn");
-        let Notification = document.querySelector(".wrap-notification");
+        // let Notification = document.querySelector(".wrap-notification");
+        let imageThumbnail = document.createElement("img");
+        let btnDownload = document.createElement("a");
+        imageThumbnail.id = "thumbnail";
+        btnDownload.id = "btn-download";
 
-
+        // Notification.classList.add("animation");
         Btn.addEventListener("click", function () {
-            Notification.classList.add("animation");
+
             if (!InputValue.value) {
                 alert("Enter YouTube URL");
-                Notification.classList.remove("animation");
             }
             else {
+                $(".infor-img").appendChild(imageThumbnail);
+                $(".infor-contents").appendChild(btnDownload);
 
-                downloadMp4(InputValue.value);
+                $(".wrap-infor").classList.add("border");
+
+                getInfor(InputValue.value);
             }
         });
 
-        async function downloadMp4(query) {
+        // async function downloadMp4(query) {
 
-            const res = await fetch(`${api}/download?url=${query}`);
+        //     const res = await fetch(`${api}/download?url=${query}`);
+        //     console.log(res);
 
-            if (res.status == 200) {
+        //     if (res.status == 200) {
 
-                var a = document.createElement("a");
-                a.href = `${api}/download?url=${query}`;
-                a.setAttribute("download", "");
-                a.click();
-                Notification.classList.remove("animation");
+        //         var a = document.createElement("a");
+        //         a.href = `${api}/download?url=${query}`;
+        //         a.setAttribute("download", "");
+        //         a.click();
+        //         Notification.classList.remove("animation");
 
-            } else if (res.status == 400) {
-                alert("Invalid url");
+        //     } else if (res.status == 400) {
+        //         alert("Invalid url");
 
-            }
+        //     }
+        // }
+
+        function getInfor(query) {
+
+            fetch(`${api}/getInfor?url=${query}`)
+                .then((res) => {
+                    return res.json()
+                })
+                .then((data) => {
+
+                    let thumbnails = data.videoDetails.thumbnails;
+                    for (let i = 0; i < thumbnails.length - 1; i++) {
+                        $("#thumbnail").src = thumbnails[i].url;
+                    }
+                    btnDownload.textContent = "download";
+                    $(".title").innerHTML = data.videoDetails.title;
+                    btnDownload.addEventListener("click", handleDownload(query))
+
+                })
         }
+
+        function handleDownload(query) {
+
+            btnDownload.href = `${api}/download?url=${query}`;
+            btnDownload.setAttribute("download", "");
+
+        };
+
 
     </script>
 </body>
