@@ -6,19 +6,20 @@ const logger = require("morgan");
 const Router = require("./Route/index.js");
 const ytdl = require("ytdl-core");
 
-var corsOptions = {
-  origin: PORT,
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-// cors(corsOptions),
-app.use(cors());
-//middleware
-app.use(logger("dev"));
+// var corsOptions = {
+//   origin: PORT,
+//   optionsSuccessStatus: 200,
+// };
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+//middleware
+app.use(logger("dev"));
 
 app.use(express.static("public"));
+
+// cors(corsOptions),
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "public/index.html");
