@@ -34,8 +34,6 @@
                 </div>
             </div>
 
-
-
         </div>
 
     </div>
@@ -44,17 +42,13 @@
         let api = "https://download-video-url.herokuapp.com";
 
         let $ = document.querySelector.bind(document);
-        let $$ = document.querySelectorAll.bind(document);
-
-        let InputValue = document.querySelector("#inputValue");
+        let InputValue = $("#inputValue");
         let Btn = document.querySelector("#btn");
-        // let Notification = document.querySelector(".wrap-notification");
         let imageThumbnail = document.createElement("img");
         let btnDownload = document.createElement("a");
         imageThumbnail.id = "thumbnail";
         btnDownload.id = "btn-download";
 
-        // Notification.classList.add("animation");
         Btn.addEventListener("click", function () {
 
             if (!InputValue.value) {
