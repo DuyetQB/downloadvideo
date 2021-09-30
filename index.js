@@ -4,11 +4,7 @@ const PORT = process.env.PORT || 4000;
 const cors = require("cors");
 const logger = require("morgan");
 const ytdl = require("ytdl-core");
-
-// var corsOptions = {
-//   origin: PORT,
-//   optionsSuccessStatus: 200,
-// };
+const axios = require("axios");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -37,7 +33,9 @@ app.use("/download", async (req, res) => {
     if (!ytdl.validateURL(url)) {
       return res.sendStatus(400);
     } else {
-      const title = "video";
+      const infor = await ytdl.getInfo(url);
+      const title =
+        infor.videoDetails.author.id + infor.videoDetails.author.name;
 
       await ytdl.getInfo(
         url,
@@ -45,8 +43,7 @@ app.use("/download", async (req, res) => {
           format: "mp4",
         },
         (err, info) => {
-          console.log("infor", info.player_response.videoDetails);
-          title = info.player_response.videoDetails.title.replace(
+          title2 = info.player_response.videoDetails.title.replace(
             /[^\x00-\x7F]/g,
             ""
           );

@@ -20,22 +20,19 @@
 <body>
 
     <div class="wrapper">
+        <h2 class="app-name">Trình tải xuống video </h2>
         <div class="search">
-            <input type="text" placeholder="pass your Youtube video url to download " id="inputValue">
-            <button id="btn">download</button>
+            <input type="text" placeholder="Enter your Youtube video url to download " id="inputValue">
+            <button id="btn">Download</button>
         </div>
         <div class="container">
             <div class="wrap-infor">
                 <div class="infor-img"></div>
-
                 <div class="infor-contents">
-
                     <h2 class="title"></h2>
                 </div>
             </div>
-
         </div>
-
     </div>
     <script>
 
@@ -43,13 +40,12 @@
 
         let $ = document.querySelector.bind(document);
         let InputValue = $("#inputValue");
-        let Btn = document.querySelector("#btn");
         let imageThumbnail = document.createElement("img");
         let btnDownload = document.createElement("a");
         imageThumbnail.id = "thumbnail";
         btnDownload.id = "btn-download";
 
-        Btn.addEventListener("click", function () {
+        $("#btn").addEventListener("click", function () {
 
             if (!InputValue.value) {
                 alert("Enter YouTube URL");
@@ -57,13 +53,10 @@
             else {
                 $(".infor-img").appendChild(imageThumbnail);
                 $(".infor-contents").appendChild(btnDownload);
-
                 $(".wrap-infor").classList.add("border");
-
                 getInfor(InputValue.value);
             }
         });
-
 
         function getInfor(query) {
 
@@ -72,7 +65,7 @@
                     return res.json()
                 })
                 .then((data) => {
-
+                    console.log("data", data);
                     let thumbnails = data.videoDetails.thumbnails;
                     for (let i = 0; i < thumbnails.length - 1; i++) {
                         $("#thumbnail").src = thumbnails[i].url;
@@ -81,14 +74,12 @@
                     $(".title").innerHTML = data.videoDetails.title;
                     btnDownload.addEventListener("click", handleDownload(query))
 
-                })
+                });
         }
 
         function handleDownload(query) {
-
             btnDownload.href = `${api}/download?url=${query}`;
             btnDownload.setAttribute("download", "");
-
         };
 
 

@@ -27,8 +27,15 @@ body {
     flex-direction: column;
     flex: 1;
     position: relative;
+    background: url(https://static.vecteezy.com/ti/vecteur-libre/p1/1429669-abstrait-colore-flux-formes-fond-vectoriel.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
+.app-name{
+    margin-bottom: 80px;
+    font-size: 30px;
+}
 .search {
     display: flex;
 
@@ -40,6 +47,7 @@ body {
     outline: none;
     border: none;
     width: 400px;
+    box-shadow: 0px 6px 12px rgb(0 0 0 / 30%);
 }
 
 #btn {
@@ -64,7 +72,8 @@ body {
     border-radius: 4px;
 }
 .border{
-    border: 1px dashed orangered;
+   
+    background:#fff;
 }
 .wrap-infor img{
     width: 360px;
