@@ -4,7 +4,6 @@ const PORT = process.env.PORT || 4000;
 const cors = require("cors");
 const logger = require("morgan");
 const ytdl = require("ytdl-core");
-const axios = require("axios");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -43,7 +42,7 @@ app.use("/download", async (req, res) => {
           format: "mp4",
         },
         (err, info) => {
-          title2 = info.player_response.videoDetails.title.replace(
+          title = info.player_response.videoDetails.title.replace(
             /[^\x00-\x7F]/g,
             ""
           );
