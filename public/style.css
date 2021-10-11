@@ -16,6 +16,17 @@ body {
     width:1190px;
     margin: 0px auto;
 }
+.icon{
+    position: fixed;
+    top:30px;
+    left:40px;
+    width:200px;
+    height:200px;
+    border-radius:50%;
+    display: flex;
+    justify-content: center;
+    z-index: 20;
+}
 .wrapper {
     background: #ecebeb;
     display: flex;
@@ -59,8 +70,8 @@ body {
     outline: none;
     border: none;
     cursor: pointer;
+    z-index: 5;
 }
-
 
 
 
@@ -109,4 +120,177 @@ margin-left: 30px;
     .wrap-infor .infor-contents .title {
         width:30%;
     }
+}
+
+.box-select{
+    width:240px;
+    height:auto;
+    border-radius: 10px;
+    background-color:#fff;
+    position: fixed;
+    bottom: 50px;
+    left:20%;
+    padding: 13px;
+    display: none;
+    z-index: 10;
+}
+.box-select h3{
+    font-weight: 300;
+}
+
+.wrap-btn-choose{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    padding-top: 20px;
+}
+#btn-choose{
+    padding: 20px 20px;
+  
+    border-radius: 4px;
+    color: white;
+    background-color: orangered;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+
+.box-select .switch_box{
+ 
+  display: flex;
+  align-items: center;
+ justify-content: space-between;
+}
+
+
+
+/* Switch 4 Specific Style Start */
+
+.box-select .box_4{
+  background: #eee;
+  margin-top: 30px;
+  padding: 10px;
+}
+
+.box-select .input_wrapper{
+  width: 80px;
+  height: 40px;
+  position: relative;
+  cursor: pointer;
+  margin-left: 0px;
+}
+
+.box-select .input_wrapper input[type="checkbox"]{
+  width: 80px;
+  height: 40px;
+  cursor: pointer;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background: #315e7f;
+  border-radius: 2px;
+  position: relative;
+  outline: 0;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+
+.box-select .input_wrapper input[type="checkbox"]:after{
+  position: absolute;
+  content: "";
+  top: 3px;
+  left: 3px;
+  width: 34px;
+  height: 34px;
+  background: #dfeaec;
+  z-index: 2;
+  border-radius: 2px;
+  -webkit-transition: all .35s;
+  transition: all .35s;
+}
+
+.box-select .input_wrapper svg{
+  position: absolute;
+  top: 50%;
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  fill: #fff;
+  -webkit-transition: all .35s;
+  transition: all .35s;
+  z-index: 1;
+}
+
+.box-select .input_wrapper .is_checked{
+  width: 18px;
+  left: 18%;
+  -webkit-transform: translateX(190%) translateY(-30%) scale(0);
+          transform: translateX(190%) translateY(-30%) scale(0);
+}
+
+.box-select .input_wrapper .is_unchecked{
+  width: 15px;
+  right: 10%;
+  -webkit-transform: translateX(0) translateY(-30%) scale(1);
+          transform: translateX(0) translateY(-30%) scale(1);
+}
+
+/* Checked State */
+.box-select .input_wrapper input[type="checkbox"]:checked{
+  background: #23da87;
+}
+
+.box-select .input_wrapper input[type="checkbox"]:checked:after{
+  left: calc(100% - 37px);
+}
+
+.box-select .input_wrapper input[type="checkbox"]:checked + .is_checked{
+  -webkit-transform: translateX(0) translateY(-30%) scale(1);
+          transform: translateX(0) translateY(-30%) scale(1);
+}
+
+.box-select .input_wrapper input[type="checkbox"]:checked ~ .is_unchecked{
+  -webkit-transform: translateX(-190%) translateY(-30%) scale(0);
+          transform: translateX(-190%) translateY(-30%) scale(0);
+}
+
+/* Switch 4 Specific Style End */
+
+
+.open{
+    display:block;
+    animation: goUp 0.4s ease-in-out;
+    transition: all .35s ease-in-out;
+}
+ @keyframes goUp {
+     from{
+         transform:scale(1);
+         transform: translateY(40px);
+        }
+     to{
+         transform:scale(1.2);
+         transform: translateY(0px);
+        }
+ }
+
+ .backdrop{
+     width:100vw;
+     height:100vh;
+     position: fixed;
+     top:0;
+     left:0;
+     right:0;
+     background: rgba(255,255,255,0.3);
+     display: none;
+ }
+
+ .open-backdrop{
+    display:block;
+ }
+ .box-fb-open{
+
+ }
+
+ .box-yt-open{
+     
 }

@@ -5,6 +5,8 @@ const cors = require("cors");
 const logger = require("morgan");
 const ytdl = require("ytdl-core");
 
+const fbdl = require("fb-video-downloader");
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //middleware
@@ -54,6 +56,31 @@ app.use("/download", async (req, res) => {
         format: "mp4",
       }).pipe(res);
     }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/getInforFb", async (req, res) => {
+  const url = req.query.url;
+  const infor = await fbdl.getInfo(url);
+  // const convert = JSON.parse(infor.data);
+  console.log("infor", infor);
+  res.status(200).json(infor);
+});
+
+app.use("/downloadFb", async (req, res) => {
+  try {
+    const url = req.query.url;
+
+    // const infor = await fbdl.getInfo(url);
+    const title = "videofb";
+
+    const data = await fbdl.getInfo(url);
+
+    res.header("Content-Disposition", `attachment; filename="${title}.mp4"`);
+    new fbdl(url);
+    return res.json(data.download.hd);
   } catch (error) {
     console.log(error);
   }
