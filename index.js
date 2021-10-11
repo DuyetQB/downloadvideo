@@ -72,8 +72,6 @@ app.get("/getInforFb", async (req, res) => {
 app.use("/downloadFb", async (req, res) => {
   try {
     const url = req.query.url;
-
-    // const infor = await fbdl.getInfo(url);
     const title = "videofb";
 
     const data = await fbdl.getInfo(url);
